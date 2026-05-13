@@ -1,0 +1,15 @@
+
+{% extends "minicrm/layout.html/" %}
+{% block title %}
+
+Add Personal Project
+
+{% endblock %}
+
+{% block content %}
+<form method="POST" class="log-form">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="save btn btn-default">Add Personal Project</button>
+</form>
+{% endblock %}

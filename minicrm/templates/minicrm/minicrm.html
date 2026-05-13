@@ -1,0 +1,184 @@
+{% extends "minicrm/layout.html/" %}
+{% block title %}
+
+
+
+{% endblock %}
+
+
+
+{% block content %}
+<div class="container pb-3">
+    <h2 class="display-3"> Projects </h2>
+    <table border="0" class="table table-striped table-hover">
+        <thead>
+            <tr>
+                    <th>#</th>
+                    <th>Название</th>
+                    <th>Артист</th>
+                    <th>Статус</th>
+                    <th>$</th>
+                    <th>Аванс</th>
+                    <th>Постоплата</th>
+                    <th>Дата постоплаты</th>
+                    <th>Остаток</th>
+                    <th>Дедлайн</th>
+                    <th>Коммент</th>
+                    <th>Старт</th>
+                    <th></th>
+            </tr>
+            <tr>
+                    <td></td>
+                    <td>Всего {{projects_count}}</td>
+                    <td></td>
+                    <td>{{avg_price}}
+                        <br>
+                        <p class="small text-secondary">Ср.чек</p>
+                    </td>
+                    <td>{{projects_sum_count}}
+                        <br>
+                        <p class="small text-secondary">Сумма</p>
+                    </td>
+                    <td>{{projects_prep_count}}
+                        <br>
+                        <p class="small text-secondary">Прислали</p>
+                    </td>
+                    <td>{{projects_postp_count}}
+                        <br>
+                        <p class="small text-secondary">Постоплата</p>
+                    </td>
+                    <td></td>
+                    <td>{{ostatok}}
+                        <br>
+                        <p class="small text-secondary">Должны</p>
+                    </td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+
+            </tr>
+        </thead>
+        <tbody>
+            {% if projects %}
+            {% for p in projects %}
+            <tr>
+                <td scope="row">{{p.pk}}</td>
+                <td>{{p.Name}}</td>
+                <td>{{p.Artist}}</td>
+                <td>
+                    {% if p.Status == 'Finished' %}
+                    <p class="text-success"> {{p.Status}} </p>
+                    {% elif p.Status == 'Fixing' %}
+                    <p class="text-warning"> {{p.Status}} </p>
+                    {% elif p.Status == 'Mixing' %}
+                    <p class="text-danger"> {{p.Status}} </p>
+                    {% else %}
+                    <p class="text"> {{p.Status}} </p>
+                    {% endif %}
+                </td>
+                <td>{{p.Price}}</td>
+                <td>
+                    {%if p.Prep_done == True %}
+                        <p class="text-success"> {{p.Prep}} </p>
+                    {% else %}
+                        <p class="text-danger"> {{p.Prep}} </p>
+                    {% endif %}
+                </td>
+                <td>
+                    {%if p.Postp_done == True %}
+                        <p class="text-success"> {{p.Price|subtract:p.Prep}} </p>
+                    {% else %}
+                        <p class="text-danger"> {{p.Price|subtract:p.Prep}} </p>
+                    {% endif %}
+                </td>
+                <td>{{p.Post_date}}</td>
+                <td>{%if p.Postp_done == True %}
+                        <p class="text-success"> {{p.Price|subtract:p.Prep}} </p>
+                    {% else %}
+                        <p class="text-danger"> {{p.Price|subtract:p.Prep}} </p>
+                    {% endif %}</td>
+                <td>{{p.Deadline}}</td>
+                <td>{{p.Comment}}</td>
+                <td>{{p.Start_date}}</td>
+                <td><a class="text-sm" href="{% url 'editproject' p.pk %}">Редактировать</a></td>
+            </tr>
+            {% endfor %}
+            {% else %}
+            <tr> There's nothing yet. </tr>
+            {% endif %}
+        </tbody>
+    </table>            
+</div>
+
+<div class="container pb-3">
+    <h2> Personal Projects </h2>
+
+    <table border="0" class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Name</th>
+                        <th>Type</th>
+                        <th>Comment</th>
+                        <th>Links</th>
+                        <th>Deadline</th>
+                    </tr>
+                </thead>
+                
+                <tbody>    
+                    {% if pprojects %}
+                    {% for pp in pprojects %}
+                    <tr>
+                        <td scope="row">{{ pp.pk }}</td>
+                        <td>{{ pp.Name }}</td>
+                        <td>{{ pp.Type }}</td>
+                        <td>{{ pp.Comment }}</td>
+                        <td>{{ pp.Links }}</td>
+                        <td>{{ pp.Deadline }}</td>
+                    </tr>
+                    {% endfor %}
+                    {% else %}
+                            <tr>
+                                <td>
+                                    No Personal Projects Yet, <a href="{% url 'addpersonal' %}">Add Personal Project</a>
+                                </td>
+                            </tr>
+                        </tbody> 
+                    {% endif %}
+                </tbody>
+    </table>
+</div>
+
+<div class="container pb-3">
+    <h2> Artists </h2>
+
+    <table border="0" class="table table-striped table-hover">
+                <thead>    
+                    <tr>
+                        <th>#</th>
+                        <th>Artists</th>
+                        <th>Created</th>
+                    </tr>
+                </thead>
+                
+        {% if artists %}
+                    <tbody>    
+            {% for artist in artists %}
+                    <tr>
+                        <td scope="row">{{ artist.pk }}</td>
+                        <td>{{ artist.Name }}</td>
+                        <td>{{ artist.Created_date }}</td>
+                    </tr>
+            {% endfor %}
+        {% else %}
+                <tr>
+                    <td>
+                        No Artists Yet, <a href="{% url 'addartist' %}">Add Artist</a>
+                    </td>
+                </tr>
+            </tbody> 
+        {% endif %}
+    </table>
+</div>
+{% endblock %}

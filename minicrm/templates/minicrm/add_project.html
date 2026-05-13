@@ -1,0 +1,36 @@
+
+{% extends "minicrm/layout.html/" %}
+{% block title %}
+
+Add Personal Project
+
+{% endblock %}
+
+{% block content %}
+
+<div class="container">
+  <div class="row align-items-center">
+    <div class="col">
+      
+    </div>
+    <div class="col">
+        <center><h1>Добавить проект</h1></center>
+      <div class="form-control-sm">
+                <form method="POST" class="form" required novalidate>
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                        <button type="submit" class="btn-primary">Сохранить</button>
+
+                </form>
+        </div>
+    </div>
+    <div class="col">
+      
+    </div>
+  </div>
+  
+</div>
+
+
+
+{% endblock %}

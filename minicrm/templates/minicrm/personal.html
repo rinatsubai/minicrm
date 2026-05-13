@@ -1,0 +1,48 @@
+{% extends "minicrm/layout.html/" %}
+{% block title %}
+
+
+
+{% endblock %}
+
+
+
+{% block content %}
+<h1> Personal Projects </h1>
+
+<table>
+            <thead>
+                <th>#</th>
+                <th>Name</th>
+                <th>Type</th>
+                <th>Comment</th>
+                <th>Links</th>
+                <th>Deadline</th>
+            </thead>
+            
+    {% if pproject_list %}
+        {% for pproject in pproject_list %}
+            <tbody>    
+                <tr>
+                    <td>{{ pproject.Number }}</td>
+                    <td>{{ pproject.Name }}</td>
+                    <td>{{ pproject.Type }}</td>
+                    <td>{{ pproject.Comment }}</td>
+                    <td>{{ pproject.Links }}</td>
+                    <td>{{ pproject.Deadline }}</td>
+                </tr>
+            </tbody>
+        {% endfor %}
+    {% else %}
+        <tbody> 
+            <tr>
+                <td>
+                    No Personal Projects Yet, <a href="{% url 'addpersonal' %}">Add Personal Project</a>
+                </td>
+            </tr>
+        </tbody> 
+    {% endif %}
+</table>
+
+
+{% endblock %}

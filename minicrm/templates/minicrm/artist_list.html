@@ -1,0 +1,40 @@
+{% extends "minicrm/layout.html/" %}
+{% block title %}
+
+Artist List
+
+{% endblock %}
+
+
+
+{% block content %}
+<h1> Artists </h1>
+
+<table>
+            <thead>
+                <th>Artists</th>
+                <th>Created</th>
+            </thead>
+            
+    {% if artist_list %}
+        {% for artist in artist_list %}
+            <tbody>    
+                <tr>
+                    <td>{{ artist.Name }}</td>
+                    <td>{{ artist.Created_date }}</td>
+                </tr>
+            </tbody>
+        {% endfor %}
+    {% else %}
+        <tbody> 
+            <tr>
+                <td>
+                    No Artists Yet, <a href="{% url 'addartist' %}">Add Artist</a>
+                </td>
+            </tr>
+        </tbody> 
+    {% endif %}
+</table>
+
+
+{% endblock %}
